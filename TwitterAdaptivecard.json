@@ -1,0 +1,81 @@
+{
+	"type": "AdaptiveCard",
+	"body": [
+		{
+			"type": "TextBlock",
+			"text": "@{triggerBody()?['UserDetails']?['FullName']} has mentioned your Tags on Twitter",
+			"weight": "Bolder",
+			"size": "Large"
+		},
+		{
+			"type": "ColumnSet",
+			"columns": [
+				{
+					"type": "Column",
+					"width": "auto",
+					"items": [
+						{
+							"type": "Image",
+							"url": "@{triggerBody()?['UserDetails']?['ProfileImageUrl']}",
+							"size": "Small",
+							"style": "Person"
+						}
+					]
+				},
+				{
+					"type": "Column",
+					"width": "stretch",
+					"items": [
+						{
+							"type": "TextBlock",
+							"text": "@{triggerBody()?['UserDetails']?['FullName']}",
+							"weight": "Bolder",
+							"wrap": true
+						},
+						{
+							"type": "TextBlock",
+							"spacing": "None",
+							"text": "@{concat('@',triggerBody()?['TweetedBy'])}",
+							"isSubtle": true,
+							"wrap": true
+						}
+					]
+				}
+			]
+		},
+		{
+			"type": "TextBlock",
+			"text": "@{triggerBody()?['TweetText']}",
+			"wrap": true,
+			"size": "Large"
+		},
+		{
+			"type": "Image",
+			"url": "@{if(empty(triggerBody()?['MediaUrls']?[0]),'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAFhAJ/wlseKgAAAABJRU5ErkJggg==',triggerBody()?['MediaUrls']?[0])}"
+		},
+		{
+            "type": "TextBlock",
+            "text": "@{variables('tweetDate')}",
+            "wrap": true
+        },
+		{
+			"type": "ActionSet",
+			"actions": [
+				{
+					"type": "Action.Submit",
+					"title": "Yammer Post",
+					"style": "positive",
+					"id": "yammer"
+				},
+				{
+					"type": "Action.Submit",
+					"title": "Notice in ToDo",
+					"style": "destructive",
+					"id": "bookmark"
+				}
+			]
+		}
+	],
+	"$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+	"version": "1.2"
+}
